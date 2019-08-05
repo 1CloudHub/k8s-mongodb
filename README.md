@@ -57,8 +57,8 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 
 	 Note : update the s3 bucket name in following files, if you have created S3 bucket with new name. 
 	 
-		update KOPS_STATE_STORE value in `/variables/cluster_variable.yaml`
-		update --state=s3://<bucket name> value in `/handlers/main.yaml`
+		update KOPS_STATE_STORE value in /variables/cluster_variable.yaml
+		update --state=s3://<bucket name> value in /handlers/main.yaml
 	 
 - #### Install AWS CLI
 	Detailed steps given in the below link to install AWS CLI on Ububtu server. 
