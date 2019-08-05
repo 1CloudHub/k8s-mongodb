@@ -7,14 +7,9 @@
 - hosts: localhost
   tasks:
     - name: Configure prometheus
-      shell : /root/k8s-mongodb/templates/prometheus-setup.sh
+      shell : /root/k8s-mongodb/tasks/prometheus-setup.sh
       args:
         executable: /bin/bash
       register: cmd_result
 
-    - name: Configure MongoDB exporter and Cadvisor
-      shell : /root/k8s-mongodb/templates/exporters-setup.sh
-      args:
-        executable: /bin/bash
-      register: cmd_result 
 
