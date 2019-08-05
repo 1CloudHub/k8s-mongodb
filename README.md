@@ -12,11 +12,20 @@ Kops is a open source tool which can be used for creating, upgrading and destroy
 
 This blog will be helpful for people (DevOps Team) to create kubernetes cluster in AWS and install mongoDB with minimal manual work. 
 
-**Table of Contents**
-
-[TOCM]
-
-[TOC]
+##### Table of Contents
+ * [Pre-requisites](#pre-requisites)
+      - [Client Server - Ubuntu OS](#client-server---ubuntu-os)
+      - [SSH Keyfile](#ssh-keyfile)
+      - [S3 Bucket](#s3-bucket)
+      - [Install AWS CLI](#install-aws-cli)
+      - [Install Ansible Kops and Kubectl](#install-ansible-kops-and-kubectl)
+ * [Deploying Kubernetes Cluster](#deploying-kubernetes-cluster)
+      - [Kubernets cluster setup on AWS EC2](#kubernets-cluster-setup-on-aws-ec2)
+ * [Deploying MongoDB Cluster](#deploying-mongodb-cluster)
+      - [MongoDB cluster setup on K8s cluster nodes](#mongodb-cluster-setup-on-k8s-cluster-nodes)
+ * [Deploying Prometheus](#deploying-prometheus)
+      - [Prometheus setup for kubernets cluster and mongoDB](#prometheus-setup-for-kubernets-cluster-and-mongodb)
+ * [Reference Blogs and Links](#reference-blogs-and-links)
 
 ## Pre-requisites
 - #### Client Server - Ubuntu OS
