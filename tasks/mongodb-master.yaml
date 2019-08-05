@@ -1,7 +1,7 @@
 ---
 
 ####################
-# Create Kubernetes cluster using Kops
+# MongoDB Configuration
 ####################
 
 - hosts: localhost
