@@ -1,0 +1,48 @@
+---
+cluster_name: k8s-mongodb-cluster.k8s.local
+state_store: s3://k8smongodbdata
+
+## Remote access
+ssh_public_key: ~/.ssh/id_rsa.pub
+
+## Regions / Availability zones
+aws_region: us-east-1
+aws_zones: us-east-1b
+
+# Use master_zones if you want your masters in different zones than worker nodes.
+
+master_zones: us-east-1b
+
+## Metion VPC ID, CIDR and subnet IDs to launch cluster nodes in existing VPC and subnets. 
+## Network
+vpc_id: vpc-039c7f85452f0d50a
+network_cidr: 172.27.0.0/16
+subnet_id: subnet-04a653f9a7ba28e1b
+utility_subnet_id: subnet-06804cb9887b39b65
+kubernetes_networking: flannel-vxlan
+
+# Topology must be either public or private
+topology: private
+public_ip: false
+loadbalancer: internal
+
+## EC2 host sizing
+base_image: kope.io/k8s-1.11-debian-stretch-amd64-hvm-ebs-2018-08-17
+
+# Master configuration
+master_size: t2.medium
+master_count: 1
+master_volume_size: 50
+
+# Node configuration
+node_size: t2.medium
+node_count: 5
+node_volume_size: 50
+
+## Cluster spec
+kubernetes_version: 1.11.3
+
+# IAM
+iam:
+  allow_container_registry: true
+  legacy: false
