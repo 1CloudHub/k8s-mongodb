@@ -101,7 +101,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 		
 	 Now, update the variables in cluster_variable.yaml file to launch cluster nodes in existing VPC, subnets. You can find the yaml file here [https://github.com/1CloudHub/k8s-mongodb/blob/master/variables/cluster_variable.yaml]
 
-	 Execute kubernetes-master.yaml script to launch cluster nodes
+	 Execute kubernetes-master.yaml script from /k8s-mongodb/tasks path to launch cluster nodes. You can find the yaml file here <>
 
 	 `$ ansible-playbook kubernetes-master.yaml `
 
