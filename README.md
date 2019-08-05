@@ -101,7 +101,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 		
 	 Now, update the variables in cluster_variable.yaml file to launch cluster nodes in existing VPC, subnets. You can find the yaml file here [https://github.com/1CloudHub/k8s-mongodb/blob/master/variables/cluster_variable.yaml]
 
-	 Execute kubernetes-master.yaml script to launch cluster nodes
+	 Execute kubernetes-master.yaml script from /k8s-mongodb/tasks path to launch cluster nodes. You can find the yaml file here <>
 
 	 `$ ansible-playbook kubernetes-master.yaml `
 
@@ -133,6 +133,8 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 `$ ansible-playbook mongodb-master.yaml `
 
 	 This will deploy 3 sharded cluster with 2 replicaset. 
+	 Now, you can verify the mongoDB container status using below command
+	 kubectl get pods
 
 ## Deploying Prometheus
 
@@ -143,6 +145,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 `$ ansible-playbook prometheus-master.yaml `
 
 	 This script will create the following serviceaccount, clusterrolebinding, namespace, install prometheus using helm chart, cadvisor and mongoDB exporter. 
+	 
 
 -  Prometheus installation
 

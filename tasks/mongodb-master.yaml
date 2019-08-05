@@ -1,12 +1,12 @@
 ---
 
 ####################
-# Create Kubernetes cluster using Kops
+# MongoDB Configuration
 ####################
 
 - hosts: localhost
   tasks:
     - name: Configure mongoDB
-      shell : /k8s-mongodb/templates/mongo-bootstrap.sh 3
+      shell : /root/k8s-mongodb/taks/mongo-bootstrap.sh 3
       register: cmd_result
 

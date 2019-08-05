@@ -1,6 +1,6 @@
 ---
-cluster_name: cluster.k8s.local
-state_store: s3://cluster-state-store
+cluster_name: k8s-cluster.k8s.local
+state_store: s3://kops-data-state-store
 
 ## Remote access
 ssh_public_key: ~/.ssh/id_rsa.pub
