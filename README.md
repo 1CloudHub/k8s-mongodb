@@ -1,16 +1,23 @@
-# K8s Mongo cluster and Prometheus
+# K8s Mongo cluster on AWS IaaS and Prometheus
 
 #### Creating a kubernetes cluster on AWS EC2 instance with MongoDB and Prometheus. 
 
-The following blog will walk you through with the steps to create a kubernetes cluster in AWS using kops, configure mongoDB and configure prometheus for monitoring the cluster and mongoDB
+The following content will walk you through the steps to create a kubernetes cluster in AWS (IaaS) using kops, configure mongoDB with sharding and setup prometheus for monitoring the nodes, K8s cluster and mongoDB using node exporter, mongoDB exporter along with Grafana. 
 
 Kubernetes is an open source container orchestration and management tool. Kubernetes provides you with a framework to run distributed systems resiliently. One of the key benefits of kubernetes is that it is self-healing and clusters can be restarted automatically in case of failure of any nodes.
 
 Kops is a open source tool which can be used for creating, upgrading and destroying kubernetes cluster and underlying infrastructure. 
 
+MongoDB Content--To be updated
+
 ### Who should use this?
 
-This blog will be helpful for people (DevOps Team) to create kubernetes cluster in AWS and install mongoDB with minimal manual work. 
+This will be helpful developer, Ops or DevOps person to create kubernetes cluster in AWS IaaS and install mongoDB with minimal manual work. 
+
+Key benefits: To be 
+
+scale the cluster after launch
+you can customize and implement you own exporter 
 
 ##### Table of Contents
  * [Pre-requisites](#pre-requisites)
@@ -149,5 +156,5 @@ In mongoDB exporter, MongoDB URI pointed to shards DNS to collect mongoDB metric
 
 ## Reference Blogs and Links
 
-*"Sharded MongoDB on Kubernetes using local persistent volumes on AWS"* By Sabarish Sasidharan
-https://itnext.io/sharded-mongodb-on-kubernetes-using-local-persistent-volumes-on-aws-cb4e1092a69c
+*"Sharded MongoDB on Kubernetes using local persistent volumes on AWS By Sabarish Sasidharan
+https://itnext.io/sharded-mongodb-on-kubernetes-using-local-persistent-volumes-on-aws-cb4e1092a69c "*
