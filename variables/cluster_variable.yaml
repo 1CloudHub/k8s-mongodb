@@ -1,5 +1,5 @@
 ---
-cluster_name: cluster.k8s.local
+cluster_name: k8s-cluster.k8s.local
 state_store: s3://cluster-state-store
 
 ## Remote access
