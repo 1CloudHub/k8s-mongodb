@@ -8,16 +8,17 @@ Kubernetes is an open source container orchestration and management tool. Kubern
 
 Kops is a open source tool which can be used for creating, upgrading and destroying kubernetes cluster and underlying infrastructure. 
 
-MongoDB Content--To be updated
+MongoDB is a document database designed for ease of development and scaling. MongoDB provides high performance data persistence, replication facility (replica set) and horizontal scalability as part of its core functionality. Sharding distributes data across a cluster of machines.
 
 ### Who should use this?
 
-This will be helpful developer, Ops or DevOps person to create kubernetes cluster in AWS IaaS and install mongoDB with minimal manual work. 
+This will be helpful for developer, Ops or DevOps person to create kubernetes cluster in AWS IaaS and install mongoDB with minimal manual work. 
 
-Key benefits: To be 
+**Key benefits:**
 
-scale the cluster after launch
-you can customize and implement you own exporter 
+-	 Scale the cluster nodes after launch.
+-	 Scale the mongoDB shards and replicaset based on the requirement. 
+-	 Exporters can be customized and implemented as required. 
 
 ##### Table of Contents
  * [Pre-requisites](#pre-requisites)
@@ -36,7 +37,9 @@ you can customize and implement you own exporter
 
 ## Pre-requisites
 - #### Client Server - Ubuntu OS
-	 In this blog, EC2 instance used as a client server for deployments. Be sure to attach the kops-profile IAM role to the instance with below permissions. Launch a new EC2 instance ( Ubuntu OS) in AWS with below IAM permissions. 
+	 In this blog, EC2 instance used as a client server for deployments. Be sure to attach the kops-profile IAM role to the instance with below permissions. 
+	 Launch a new EC2 instance ( Ubuntu OS) in AWS with below IAM permissions. 
+	 
 	 - AmazonEC2FullAccess
 	 - AmazonS3FullAccess
 	 - IAMFullAccess
@@ -81,7 +84,7 @@ you can customize and implement you own exporter
 ## Deploying Kubernetes Cluster
 - ##### Kubernets cluster setup on AWS EC2
 
-	You can create a cluster in an existing VPC or new VPC either with a public or private topology. 
+	You can create a cluster in an existing VPC or new, either with a public or private topology. 
 	
 	In this example, we will be using a pre-existing VPC and subnets for cluster deployment. The gossip based cluster will be deployed with public topology. 
 
@@ -89,19 +92,22 @@ you can customize and implement you own exporter
 	 
 	 `$ export KOPS_STATE_STORE=s3://<S3 Bucket name> `
 		
-	 Now, update the variables in cluster_variable.yaml file to launch cluster nodes in existing VPC, subnets. You can find the yaml file here [https://github.com/1CloudHub/k8s-mongodb/blob/master/variables/cluster_variable.yaml](https://github.com/1CloudHub/k8s-mongodb/blob/master/variables/cluster_variable.yaml)
+	 Now, update the variables in cluster_variable.yaml file to launch cluster nodes in existing VPC, subnets. You can find the yaml file here [https://github.com/1CloudHub/k8s-mongodb/blob/master/variables/cluster_variable.yaml]
 
 	 Execute kubernetes-master.yaml script to launch cluster nodes
 
 	 `$ ansible-playbook kubernetes-master.yaml `
 
 	 After few minutes, ensure the cluster is up and running,
-	 kops validate cluster --name <cluster-name>
-	 Validate kubernetes cluster nodes state
-
+	 
+	 `$ kops validate cluster --name <cluster-name> `
+	 
+	 Verify kubernetes cluster nodes state
+	 
 	 `$ kubectl get nodes `
-
-	 The above command will result all the nodes status. 
+	 
+	 The above command will result all the nodes with status. 
+	 
 ## Deploying MongoDB Cluster
 - ##### MongoDB cluster setup on K8s cluster nodes
 
@@ -119,9 +125,12 @@ you can customize and implement you own exporter
 
 	 `$ ansible-playbook mongodb-master.yaml `
 
+	 This will deploy 3 sharded cluster with 2 replicaset. 
+
 ## Deploying Prometheus
 
-- ##### Prometheus setup for kubernets cluster and mongoDB
+- ##### Prometheus setup for monitoring the nodes, K8s cluster and mongoDB
+
 	 Execute Prometheus-master.yaml script. 
 
 	 `$ ansible-playbook prometheus-master.yaml `
