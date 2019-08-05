@@ -134,7 +134,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 
 	 This will deploy 3 sharded cluster with 2 replicaset. 
 	 Now, you can verify the mongoDB container status using below command
-	 kubectl get pods
+	 kubectl get pods -o wide
 
 ## Deploying Prometheus
 
@@ -145,7 +145,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 `$ ansible-playbook prometheus-master.yaml `
 
 	 This script will create the following serviceaccount, clusterrolebinding, namespace, install prometheus using helm chart, cadvisor and mongoDB exporter. 
-	 
+	 Allow port 30090 in AWS Security group to access Prometheus using K8s Master IP. 
 
 -  Prometheus installation
 
