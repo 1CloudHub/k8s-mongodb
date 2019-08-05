@@ -11,3 +11,7 @@ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admi
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
 kubectl create namespace monitoring
 helm install stable/prometheus-operator --name opc-prom --set prometheus.service.type=NodePort --namespace monitoring
+kubectl apply -f mongoext-deployment.yaml,mongoext-svc.yaml,mongoext-sm.yaml -n monitoring
+kubectl apply -f cadvisor.yaml,cadvisor-svc.yaml,cadvisor-sm.yaml -n monitoring
+
+
