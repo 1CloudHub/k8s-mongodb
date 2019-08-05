@@ -133,6 +133,8 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 `$ ansible-playbook mongodb-master.yaml `
 
 	 This will deploy 3 sharded cluster with 2 replicaset. 
+	 Now, you can verify the mongoDB container status using below command
+	 kubectl get pods
 
 ## Deploying Prometheus
 
@@ -143,6 +145,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 `$ ansible-playbook prometheus-master.yaml `
 
 	 This script will create the following serviceaccount, clusterrolebinding, namespace, install prometheus using helm chart, cadvisor and mongoDB exporter. 
+	 
 
 -  Prometheus installation
 
