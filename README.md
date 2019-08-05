@@ -33,6 +33,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
       - [MongoDB cluster setup on K8s cluster nodes](#mongodb-cluster-setup-on-k8s-cluster-nodes)
  * [Deploying Prometheus](#deploying-prometheus)
       - [Prometheus setup for kubernets cluster and mongoDB](#prometheus-setup-for-kubernets-cluster-and-mongodb)
+ * [Configuration](#Configuration)
  * [Reference Blogs and Links](#reference-blogs-and-links)
 
 ## Pre-requisites
@@ -162,6 +163,34 @@ In mongoDB exporter, MongoDB URI pointed to shards DNS to collect mongoDB metric
             image: ssheehy/mongodb-exporter:0.7.0
     
 	
+## Configuration
+Following table shows the different options to deploy kubernetes cluster and mongoDB.
+
+| Parameter   | Description  |  Default |
+| :------------ | :------------ | :------------ |
+| cluster_name| Name of the cluster to be created. The name has to end with the domain name if DNS zone hoster in Route53 | kubernetes-cluster.k8s.local | 
+| state_store | Name of the AWS S3 bucket to be used as kops state store | s3://cluster-state-store |
+| aws_region  | AWS region in which cluster nodes to be deployed  | ap-south-1  |
+| aws_zones | AWS availability zone in which cluster nodes to be deployed | ap-south-1a |
+| master_zones | AWS availability zone to deploy master node | ap-south-1a |
+| vpc_id | Mention your VPC id exists in your AWS account to launch cluster instances | for example - vpc-xxxxxxxx |
+| network_cidr | Mention your existing VPC CIDR range | For example-10.x.x.x/16 |
+| subnet_id | Subnet id of existing public subnet | for exampe - subnet-xxxxxxxxx |
+| master_size | EC2 instance size for the kubernetes master node | t2.medium |
+| master_count | Number of EC2 master nodes | 1 | 
+| master_volume_size | Size of the master node disk volume in GB | 50 |
+| node_size | EC2 instance size for the kubernetes worker nodes | t2.medium |
+| node_count | Number of EC2 worker nodes | 3 |
+| node_volume_size | Size of the worker node disk volume in GB | t2.medium |
+| topology | Defines whether the cluster should be deployed into public subnet or private subnet with bastion host | public |
+| public_ip | Switch to enable/disable public ip assignment | true |
+| base_image | Image used for all the instances | kope.io/k8s-1.11-debian-stretch-amd64-hvm-ebs-2018-08-17 |
+| kubernetes_networking | Defines which networking plugin should be used in Kubernetes. Tested with  flannel-vxlan only. | flannel-vxlan |
+| kubernetes_version | Version of kubernetes which should be used. | 1.11.3 |
+| allow_container_registry| Optional, to allow read access to Amazon ECR | true |
+| legacy | Optional, to use the legacy IAM privileges | false |
+| mongodbUsername  | MongoDB custom user   | admin   |
+| mongodbRootPassword | MongoDb admin Password | Welcome@321
 
 ## Reference Blogs and Links
 
