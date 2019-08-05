@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-rt-svc
+  labels:
+    app: mongo-rt
+    facing: external
+    group: mongo
+spec:
+  ports:
+  - protocol: TCP
+    port: 27017
+    nodePort: 32463
+    targetPort: main
+    name: main
+  selector:
+    app: mongo-rt
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo-rt
+  labels:
+    app: mongo-rt
+    group: mongo
+spec:
+  serviceName: mongo-rt-svc
+  selector:
+    matchLabels:
+      app: mongo-rt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongo-rt
+        group: mongo
+      name: mongo-rt
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1       
+            preference:
+              matchExpressions:
+              - key: component
+                operator: In
+                values: ["api"]
+      containers:
+      - name: mongo-rt
+        image: mongo:3.6.9
+        command:
+          - "mongos"
+            # - "--keyFile"
+            #- "/etc/secrets/mongodb-keyfile"
+          - "--configdb"
+          - "crs/mongo-config-0.mongo-config-svc.default.svc.cluster.local:27017,mongo-config-1.mongo-config-svc.default.svc.cluster.local:27017,mongo-config-2.mongo-config-svc.default.svc.cluster.local:27017"
+          - "--port"
+          - "27017"
+          - "--bind_ip"
+          - "0.0.0.0"
+        ports:
+        - containerPort: 27017
+          name: main
+        volumeMounts:
+          - mountPath: /etc/secrets
+            name: secrets
+      volumes:
+        - name: secrets
+          secret:
+            secretName: mongodb-key
+            defaultMode: 256
+      nodeSelector:
+        component: api
+        #hostNetwork: true
+      # dnsPolicy: ClusterFirstWithHostNet

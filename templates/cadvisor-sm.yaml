@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  generation: 1
+  labels:
+    release: opc-prom
+    app: prometheus-cadvisor
+    name: prometheus-cadvisor
+  name: opc-prom-prometheus-cadvisor
+  namespace: monitoring
+  selfLink: /apis/monitoring.coreos.com/v1/namespaces/monitoring/servicemonitors/opc-prom-prometheus-cadvisor
+spec:
+  endpoints:
+  - honorLabels: true
+    path: /
+    port: chttp
+  namespaceSelector:
+    matchNames:
+    - monitoring
+  selector:
+    matchLabels:
+      release: opc-prom
+      app: cadvisor-svc

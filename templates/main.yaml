@@ -1,0 +1,41 @@
+---
+
+####################
+# Create Kubernetes cluster using Kops
+####################
+
+- name: Configure topology variable
+  set_fact:
+    topology: "public"
+  when: topology != "private"
+
+- name: Configure bastion variables
+  set_fact:
+    bastion: "false"
+    public_ip: "true"
+
+- name: Configure topology variable
+  set_fact:
+    topology: "private"
+  when: topology != "public"
+
+- name: Configure bastion variables
+  set_fact:
+    bastion: "true"
+    public_ip: "false"
+  when: topology == "private"
+
+- name: Configure the cluster
+  shell: "kops create cluster --associate-public-ip={{ public_ip }} --cloud=aws --image {{ base_image }} --master-size={{ master_size }} --master-zones={{ master_zones }} --master-count={{ master_count }} --master-volume-size={{ master_volume_size }} --vpc={{ vpc_id }} --network-cidr={{ network_cidr }} --subnets={{ subnet_id }} --networking={{ kubernetes_networking }} --node-count={{ node_count }} --node-size={{ node_size }} --node-volume-size={{ node_volume_size }} --target=direct --topology={{ topology }} --zones={{ aws_zones }} --api-loadbalancer-type={{ loadbalancer }} --ssh-public-key={{ ssh_public_key }} --name={{ cluster_name }} --state {{ state_store }} --authorization=rbac --kubernetes-version {{ kubernetes_version }}"
+
+- include: ig_conf.yaml
+
+- include: cluster_conf.yaml
+
+- name: Verify that all Kubernetes nodes are ready
+  shell: kubectl get nodes | grep "Ready" | wc -l
+  register: cmd_result
+  until: cmd_result.stdout.find('{{ node_count + master_count }}') != -1
+  retries: 20
+  delay: 60
+

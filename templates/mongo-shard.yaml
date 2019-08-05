@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-shard0-svc
+  labels:
+    app: mongo-shard0
+    facing: internal
+    impl: native
+    group: mongo
+spec:
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
+    name: main
+  clusterIP: None
+  selector:
+    app: mongo-shard0
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo-shard0
+spec:
+  serviceName: mongo-shard0-svc
+  selector:
+    matchLabels:
+      app: mongo-shard0
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mongo-shard0
+        group: mongo
+      name: mongo-shard0
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: group
+                  operator: In
+                  values:
+                  - mongo
+              topologyKey: kubernetes.io/hostname
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1        
+            preference:
+              matchExpressions:
+              - key: component
+                operator: In
+                values: ["mongo-shard"]
+      containers:
+      - name: mongo-shard
+        image: mongo:3.6.9
+        command: 
+          - "mongod"
+            #- "--keyFile"
+            #- "/etc/secrets/mongodb-keyfile"
+          - "--shardsvr"
+          - "--replSet"
+          - "shard0"
+          - "--port"
+          - "27017"
+          - "--bind_ip"
+          - "0.0.0.0"
+          - "--dbpath"
+          - "/data/db"
+        ports:
+        - containerPort: 27017
+          name: main
+        volumeMounts:
+          - mountPath: /etc/secrets
+            name: secrets
+          - mountPath: /data/db
+            name: data
+      volumes:
+        - name: secrets
+          secret:
+            secretName: mongodb-key
+            defaultMode: 256
+      nodeSelector:
+        component: mongo-shard
+        #hostNetwork: true
+      #dnsPolicy: None
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+      annotations:
+        volume.alpha.kubernetes.io/storage-class: gp2
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 40Gi

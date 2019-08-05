@@ -1,0 +1,15 @@
+---
+
+####################
+# Create Kubernetes cluster using Kops
+####################
+
+- hosts: localhost
+  vars_files:
+    - /k8s-mongodb/variables/cluster_variable.yaml
+  tasks:
+    - name: configure cluster
+      import_tasks: /k8s-mongodb/templates/main.yaml
+ 
+  handlers:
+    - include: /k8s-mongodb/handlers/main.yaml

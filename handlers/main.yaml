@@ -4,4 +4,4 @@
   shell: 'kops replace --name {{ cluster_name }} -f /tmp/{{ cluster_name }}-ig-conf.yaml'
 
 - name: Push cluster config
-  shell: 'kops update cluster --name {{ cluster_name }} --yes --state=s3://k8smongodbdata'
+  shell: 'kops update cluster --name {{ cluster_name }} --yes --state=s3://cluster-state-store'

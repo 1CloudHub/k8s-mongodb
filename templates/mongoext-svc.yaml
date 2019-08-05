@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongdb-exporter
+    chart: mongodb-exporter-2.0.0
+    heritage: Tiller
+    release: opc-prom
+  name: opc-prom-mongodb-exporter
+  namespace: monitoring
+  selfLink: /api/v1/namespaces/monitoring/services/opc-prom-mongodb-exporter
+spec:
+  ports:
+  - name: mservice
+    port: 9001
+    protocol: TCP
+    targetPort: 9216
+  selector:
+    app: mongdb-exporter
+    release: opc-prom
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

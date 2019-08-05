@@ -1,0 +1,13 @@
+---
+
+- name: Fetch current instance groups config
+  shell: 'kops get instancegroups --name {{ cluster_name }} -o yaml > /tmp/{{ cluster_name }}-ig-conf.yaml'
+  changed_when: false
+
+- name: Change Machine type
+  shell: "sed -i -e 's/^  machineType:.*/  machineType:  {{ machineType_worker }}  /g' /tmp/{{ cluster_name }}-ig-conf.yaml"
+  when: machineType_worker is defined
+
+- name: Run handlers
+  meta: flush_handlers
+

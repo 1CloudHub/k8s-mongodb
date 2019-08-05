@@ -1,0 +1,88 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 1
+  labels:
+    release: opc-prom
+    managed-by: Tiller
+    name: prometheus-mongodb-exporter
+    chart: prometheus-mongodb-exporter-2.0.0
+    app: mongdb-exporter
+  name: opc-prom-prometheus-mongodb-exporter
+  namespace: monitoring
+  selfLink: /apis/extensions/v1beta1/namespaces/monitoring/deployments/opc-prom-prometheus-mongodb-exporter
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      release: opc-prom
+      app: mongdb-exporter
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        release: opc-prom
+        app: mongdb-exporter
+    spec:
+      affinity: {}
+      containers:
+      - args:
+              #- --mongodb.uri=mongodb://admin:Welcome2019@mongo-shard0-svc.default.svc.cluster.local:32463
+        - --mongodb.uri=mongodb://mongo-shard0-0.mongo-shard0-svc.default.svc.cluster.local:27017
+        - --web.listen-address=:9216
+        - --collect.collection
+        - --collect.database
+        - --collect.indexusage
+        - --collect.topmetrics
+          #- --groups.enabled="asserts,op_counters,durability,background_flushing,index_counters,locks"  
+        image: ssheehy/mongodb-exporter:0.7.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: mongodb-exporter
+        ports:
+        - containerPort: 9216
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - all
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 10000
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

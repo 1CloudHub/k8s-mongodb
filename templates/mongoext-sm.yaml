@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  generation: 1
+  labels:
+    release: opc-prom
+    managed-by: Tiller
+    app: prometheus-mongdb-exporter
+    name: prometheus-mongodb-exporter
+    chart: prometheus-mongodb-exporter-2.0.0
+  name: opc-prom-prometheus-mongodb-exporter
+  namespace: monitoring
+  selfLink: /apis/monitoring.coreos.com/v1/namespaces/monitoring/servicemonitors/opc-prom-prometheus-mongodb-exporter
+spec:
+  endpoints:
+  - path: /metrics
+    port: mservice
+  namespaceSelector:
+    matchNames:
+    - monitoring
+  selector:
+    matchLabels:
+      release: opc-prom
+      app: mongdb-exporter
