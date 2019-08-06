@@ -10,12 +10,3 @@ kubectl create serviceaccount --namespace kube-system tiller
 kubectl create namesapce monitoring
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-<<<<<<< HEAD
-=======
-kubectl create namespace monitoring
-helm install stable/prometheus-operator --name opc-prom --set prometheus.service.type=NodePort --namespace monitoring
-kubectl apply -f mongoext-deployment.yaml,mongoext-svc.yaml,mongoext-sm.yaml -n monitoring
-kubectl apply -f cadvisor.yaml,cadvisor-svc.yaml,cadvisor-sm.yaml -n monitoring
-
->>>>>>> 8e542217ba3408ea20ecc2cff7a085034e95b7ff
-
