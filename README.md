@@ -62,14 +62,18 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 
 - #### Install AWS CLI
 	Check if python is already installed in Ubuntu system using below command,
-
-	python3 --version
+	
+	 `$ python3 --version `
 
 	Install awscli by following below steps, if python3 is already install continue with installing python3-pip. 
-	sudo apt update
-	sudo apt install python3
-	sudo apt install python3-pip
-	pip3 install awscli
+	
+	 `$ sudo apt update `
+	 
+	 `$ sudo apt install python3 `
+	 
+	 `$ sudo apt install python3-pip `
+	 
+	 `$ pip3 install awscli  `
 	
 	Detailed steps given in the below link to install AWS CLI on Ububtu server. 
 	
