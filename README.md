@@ -57,8 +57,8 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 
 	 Note : update the s3 bucket name in following files, if you have created S3 bucket with new name. 
 	 
-		update KOPS_STATE_STORE value in /variables/cluster_variable.yaml
-		update --state=s3://<bucket name> value in /handlers/main.yaml
+		update KOPS_STATE_STORE value in variables/cluster_variable.yaml
+		update --state=s3://<bucket name> value in handlers/main.yaml
 	 
 - #### Install AWS CLI
 	Check if python is already installed in Ubuntu system using below command,
@@ -104,7 +104,8 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 
 ## Deploying Kubernetes Cluster
 - ##### Kubernets cluster setup on AWS EC2
-
+	 Clone/download the github repository files to your local root directory. 
+	 
 	You can create a cluster in an existing VPC or new, either with a public or private topology. 
 	
 	In this example, we will be using a pre-existing VPC and subnets for cluster deployment. The gossip based cluster will be deployed with public topology. 
@@ -148,7 +149,8 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 
 	 This will deploy 3 sharded cluster with 2 replicaset. 
 	 Now, you can verify the mongoDB container status using below command
-	 kubectl get pods -o wide
+	 
+	 `$ kubectl get pods -o wide `
 
 ## Deploying Prometheus
 
