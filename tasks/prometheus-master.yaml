@@ -29,14 +29,10 @@
       wait_for:
         delay: 60
         timeout: 0
-
-<<<<<<< HEAD
+        
     - name: Configure MongoDB exporter and Cadvisor
       shell : /root/k8s-mongodb/templates/exporters-setup.sh
       args:
         executable: /bin/bash
       register: cmd_result
     - debug: msg={{cmd_result.stdout}}
-=======
-
->>>>>>> 8e542217ba3408ea20ecc2cff7a085034e95b7ff
