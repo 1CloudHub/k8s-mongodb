@@ -53,7 +53,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 
 	 The above created keyfile will be stored in ~/.ssh/id_rsa.pub path. 
 - #### S3 Bucket 
-	 Create new S3 bucket ( --state=s3://cluster-state-store) in AWS console for kubernetes cluster setup.
+	 Create new S3 bucket (cluster-state-store) in AWS console for kubernetes cluster setup.
 	 
 	 Note : update the s3 bucket name in following files, if you have created S3 bucket with new name. 
 	 
