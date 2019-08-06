@@ -115,7 +115,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 		
 	 Now, update the variables in cluster_variable.yaml file to launch cluster nodes in existing VPC, subnets. You can find the yaml file here [https://github.com/1CloudHub/k8s-mongodb/blob/master/variables/cluster_variable.yaml]
 
-	 Execute kubernetes-master.yaml script from /k8s-mongodb/tasks path to launch cluster nodes. You can find the yaml file here <>
+	 Execute kubernetes-master.yaml script from /k8s-mongodb/tasks path to launch cluster nodes. You can find the yaml file here [https://github.com/1CloudHub/k8s-mongodb/blob/master/tasks/kubernetes-master.yaml]
 
 	 `$ ansible-playbook kubernetes-master.yaml `
 
@@ -143,7 +143,7 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 Now, execute mongodb-master.yaml to setup mongoDB cluster. 
 
 	 This will install mongoDB 3.6.9 on kubernetes 3 node cluster based on the labels configured. 
-
+	
 	 `$ ansible-playbook mongodb-master.yaml `
 
 	 This will deploy 3 sharded cluster with 2 replicaset. 
@@ -161,7 +161,11 @@ This will be helpful for developer, Ops or DevOps person to create kubernetes cl
 	 This script will create the following serviceaccount, clusterrolebinding, namespace, install prometheus using helm chart, cadvisor and mongoDB exporter. 
 	 Allow port 30090 in AWS Security group to access Prometheus using K8s Master IP. 
 
--  Prometheus installation
+	 Now, you can verify the mongoDB container status using below command
+	 
+	 `$ kubectl get pods -n monitoring `
+
+-  Prometheus installation includes the following,
 
 	 - `$ kubectl create serviceaccount --namespace kube-system tiller `
 	 - `$ kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller `
@@ -186,6 +190,7 @@ In mongoDB exporter, MongoDB URI pointed to shards DNS to collect mongoDB metric
             image: ssheehy/mongodb-exporter:0.7.0
     
 	
+
 ## Configuration
 Following table shows the different options to deploy kubernetes cluster and mongoDB.
 
