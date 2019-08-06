@@ -7,7 +7,7 @@
 - hosts: localhost
   tasks:
     - name: Configure mongoDB
-      shell : /root/k8s-mongodb/taks/mongo-bootstrap.sh 3
+      shell : /root/k8s-mongodb/tasks/mongo-bootstrap.sh 3
       register: cmd_result
     - debug: msg={{cmd_result.stdout}}
 
