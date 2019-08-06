@@ -27,11 +27,11 @@
 
     - name: Sleep for 60 seconds and timeout
       wait_for:
-        delay: 60
+        delay: 80
         timeout: 0
         
     - name: Configure MongoDB exporter and Cadvisor
-      shell : /root/k8s-mongodb/templates/exporters-setup.sh
+      shell : /root/k8s-mongodb/tasks/exporters-setup.sh
       args:
         executable: /bin/bash
       register: cmd_result
