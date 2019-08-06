@@ -7,14 +7,32 @@
 - hosts: localhost
   tasks:
     - name: Configure prometheus
-      shell : /root/k8s-mongodb/templates/prometheus-setup.sh
+      shell : /root/k8s-mongodb/tasks/prometheus-setup.sh
       args:
         executable: /bin/bash
       register: cmd_result
+    - debug: msg={{cmd_result.stdout}}
+
+    - name: Sleep for 60 seconds and timeout
+      wait_for:
+        delay: 60
+        timeout: 0
+
+    - name: Installing Prometheus Operator
+      shell : /root/k8s-mongodb/tasks/prometheus-operator.sh
+      args:
+        executable: /bin/bash
+      register: cmd_result
+    - debug: msg={{cmd_result.stdout}}
+
+    - name: Sleep for 60 seconds and timeout
+      wait_for:
+        delay: 60
+        timeout: 0
 
     - name: Configure MongoDB exporter and Cadvisor
       shell : /root/k8s-mongodb/templates/exporters-setup.sh
       args:
         executable: /bin/bash
-      register: cmd_result 
-
+      register: cmd_result
+    - debug: msg={{cmd_result.stdout}}
